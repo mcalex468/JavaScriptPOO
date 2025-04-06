@@ -23,6 +23,7 @@ function muestraResultadoDOM(identificador, resultado) {
     content.appendChild(p);
 }
 
+
 function init() {
     // Pasamos el JSON a Array de Objetos
     const alumnosArrObj = JSON.parse(alumnosJSON);

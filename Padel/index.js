@@ -1,3 +1,4 @@
+// Mismo nombre que la clase 
 import { GestorJugadores } from "./GestorJugadores.js";
 import { Jugador } from "./Jugador.js";
 
@@ -8,3 +9,74 @@ const jugadores = [
     { "nombre": "Sofía", "apellidos": "López", "edad": 22, "email": "sofia.lopez@email.com", "nivel": 2, "partidosJugados": 10, "victorias": 4, "valoracion": [4, 6, 9] },
     { "nombre": "Javier", "apellidos": "Ruiz", "edad": 30, "email": "javier.ruiz@email.com", "nivel": 3, "partidosJugados": 15, "victorias": 9, "valoracion": [6, 8, 8] }
 ];
+
+function muestraResultadoDOM(identificador, resultado) {
+    let content = document.getElementById(identificador);
+    let p = document.createElement("p");
+    p.innerHTML = resultado;
+    content.appendChild(p);
+}
+
+/*
+ function muestraResultadoDOM(identificador, resultado) {
+    let content = document.getElementById(identificador);
+    content.innerHTML = `<p>${resultado}</p>`; // Reemplaza en vez de añadir
+}
+*/
+function init() {
+
+    const jugadoresJSON = JSON.stringify(jugadores);
+
+    const jugadoresObj = JSON.parse(jugadoresJSON);
+
+    let gestorJugadores = new GestorJugadores();
+
+    jugadoresObj.forEach(jugador => {
+        let jugadorNuevo = new Jugador(jugador.nombre, jugador.apellidos, jugador.edad, jugador.email, jugador.nivel, jugador.partidosJugados, jugador.victorias, jugador.valoracion);
+        gestorJugadores.agregarJugador(jugadorNuevo);
+    });
+
+    console.log(gestorJugadores.jugadoresLista);
+
+    // Mostrar todos los jugadores
+    gestorJugadores.jugadoresLista.forEach(jugador => {
+        muestraResultadoDOM('jugadores', jugador.toString());
+    });
+
+    // Lista de jugadores ordenados alfabéticamente
+    const jugadoresAlfabeticos = gestorJugadores.listarJugadores();
+    muestraResultadoDOM('alfabetico', "Jugadores ordenados alfabéticamente:");
+    jugadoresAlfabeticos.forEach(jugador => muestraResultadoDOM('alfabetico', jugador.toString()));
+
+    // Lista de jugadores por nivel
+    const jugadoresPorNivel = gestorJugadores.jugadoresPorNivel();
+    muestraResultadoDOM('nivel', "Jugadores ordenados por nivel (descendente):");
+    jugadoresPorNivel.forEach(jugador => muestraResultadoDOM('nivel', jugador.toString()));
+
+    // Lista de jugadores por valoración media
+    const jugadoresPorValoracion = gestorJugadores.jugadoresPorValoracionMedia();
+    muestraResultadoDOM('valoracion', "Jugadores ordenados por valoración media:");
+    jugadoresPorValoracion.forEach(jugador => muestraResultadoDOM('valoracion', `${jugador.toString()} - Media: ${jugador.calcularValoracionMedia()}`));
+
+    // Mejor jugador por victorias
+    const mejorJugador = gestorJugadores.mejorJugador();
+    muestraResultadoDOM('mejor', `Mejor jugador por victorias: ${mejorJugador.toString()} - Victorias: ${mejorJugador.victorias}`);
+
+    // Eliminar un jugador (por ejemplo, "Sofía")
+    gestorJugadores.eliminarJugador("Sofía");
+    muestraResultadoDOM('eliminar', "Lista después de eliminar a Sofía:");
+    gestorJugadores.jugadoresLista.forEach(jugador => {
+        muestraResultadoDOM('eliminar', jugador.toString());
+    });
+
+    // EXTRA
+    // Buscar jugador (por ejemplo, buscar "Carlos")
+    const jugadorBuscado = gestorJugadores.jugadoresLista.find(jugador => jugador.nombre === "Carlos");
+    if (jugadorBuscado) {
+        muestraResultadoDOM('buscado', `Jugador encontrado: ${jugadorBuscado.toString()} - Email: ${jugadorBuscado.email}`);
+    } else {
+        muestraResultadoDOM('buscado', "Jugador no encontrado.");
+    }
+}
+
+init();

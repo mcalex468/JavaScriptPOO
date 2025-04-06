@@ -1,6 +1,6 @@
 import { Jugador } from "./Jugador.js";
 
-export class GestionJugadores {
+export class GestorJugadores {
     constructor() {
         this.jugadoresLista = [];
     }
