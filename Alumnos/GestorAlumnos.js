@@ -1,4 +1,4 @@
-import { Alumno } from '/Alumno.js';
+import { Alumno } from "./Alumno.js";
 
 // Clase GestorAlumnos
 export class GestorAlumnos {

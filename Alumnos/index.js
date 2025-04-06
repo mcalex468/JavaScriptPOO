@@ -1,5 +1,5 @@
-import { GestorAlumnos } from "/GestorAlumnos.js";
-import { Alumno } from "/Alumno.js";
+import { GestorAlumnos } from "./GestorAlumnos.js";
+import { Alumno } from "./Alumno.js";
 
 const alumnosJSON = `[
     {"nombre": "Ana", "apellidos": "Pérez Gómez", "fechaNacimiento": "2005-06-15", "email": "ana.perez@email.com", "ciclo": "DAM", "notas": [8, 7, 9, 6] },
