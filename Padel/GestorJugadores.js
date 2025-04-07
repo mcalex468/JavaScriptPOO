@@ -12,6 +12,12 @@ export class GestorJugadores {
         }
     }
 
+    // Método para buscar un jugador por nombre
+    buscarJugador(nombreJugador) {
+        return this.jugadoresLista.find(jugador => jugador.nombre === nombreJugador);
+    }
+
+
     // Método para eliminar un jugador por nombre
     eliminarJugador(nombreJugador) {
         if (typeof nombreJugador === "string") {

@@ -17,25 +17,35 @@ function muestraResultadoDOM(identificador, resultado) {
     content.appendChild(p);
 }
 
-/*
- function muestraResultadoDOM(identificador, resultado) {
-    let content = document.getElementById(identificador);
-    content.innerHTML = `<p>${resultado}</p>`; // Reemplaza en vez de añadir
-}
-*/
 function init() {
-
+    // De Array de Obj a JSON
     const jugadoresJSON = JSON.stringify(jugadores);
-
+    // De JSON a Array de Obj
     const jugadoresObj = JSON.parse(jugadoresJSON);
-
+    // Inicializamos Gestor
     let gestorJugadores = new GestorJugadores();
 
     jugadoresObj.forEach(jugador => {
         let jugadorNuevo = new Jugador(jugador.nombre, jugador.apellidos, jugador.edad, jugador.email, jugador.nivel, jugador.partidosJugados, jugador.victorias, jugador.valoracion);
         gestorJugadores.agregarJugador(jugadorNuevo);
     });
-
+    /*
+    for (let i = 0; i < jugadoresObj.length; i++) {
+        let jugador = jugadoresObj[i];
+        let jugadorNuevo = new Jugador(
+            jugador.nombre, 
+            jugador.apellidos, 
+            jugador.edad, 
+            jugador.email, 
+            jugador.nivel, 
+            jugador.partidosJugados, 
+            jugador.victorias, 
+            jugador.valoracion
+        );
+        gestorJugadores.agregarJugador(jugadorNuevo);
+    }
+    */
+    // Comprobamos si esta cargado
     console.log(gestorJugadores.jugadoresLista);
 
     // Mostrar todos los jugadores
@@ -58,25 +68,32 @@ function init() {
     muestraResultadoDOM('valoracion', "Jugadores ordenados por valoración media:");
     jugadoresPorValoracion.forEach(jugador => muestraResultadoDOM('valoracion', `${jugador.toString()} - Media: ${jugador.calcularValoracionMedia()}`));
 
-    // Mejor jugador por victorias
+    // Mejor jugador por victorias // Devuelve 1 OBJ (NO Array)
     const mejorJugador = gestorJugadores.mejorJugador();
     muestraResultadoDOM('mejor', `Mejor jugador por victorias: ${mejorJugador.toString()} - Victorias: ${mejorJugador.victorias}`);
 
-    // Eliminar un jugador (por ejemplo, "Sofía")
+    // Eliminar un jugador
     gestorJugadores.eliminarJugador("Sofía");
     muestraResultadoDOM('eliminar', "Lista después de eliminar a Sofía:");
     gestorJugadores.jugadoresLista.forEach(jugador => {
         muestraResultadoDOM('eliminar', jugador.toString());
     });
 
-    // EXTRA
-    // Buscar jugador (por ejemplo, buscar "Carlos")
+    // Buscar Jugador
+    const jugadorB = gestorJugadores.buscarJugador("Carlos");
+    if (jugadorB) {
+        muestraResultadoDOM('buscado', `Jugador encontrado ${jugadorB.toString()} - Email ${jugadorB.email} `)
+    }
+
+    /*
+    // Buscar jugador en el INIT 
     const jugadorBuscado = gestorJugadores.jugadoresLista.find(jugador => jugador.nombre === "Carlos");
     if (jugadorBuscado) {
         muestraResultadoDOM('buscado', `Jugador encontrado: ${jugadorBuscado.toString()} - Email: ${jugadorBuscado.email}`);
     } else {
         muestraResultadoDOM('buscado', "Jugador no encontrado.");
     }
+    */
 }
 
 init();
