@@ -1,8 +1,8 @@
 // Equipo.js
 export class Equipo {
-    constructor(nombre, jugadores, victorias = 0, derrotas = 0, puntos = 0) {
+    constructor(nombre, jugadores = [], victorias = 0, derrotas = 0, puntos = 0) {
         this.nombre = nombre;
-        this.jugadores = jugadores || [];
+        this.jugadores = jugadores;
         this.victorias = victorias;
         this.derrotas = derrotas;
         this.puntos = puntos;
@@ -20,7 +20,14 @@ export class Equipo {
         return totalPuntaje / this.jugadores.length;
     }
 
-    // Método para obtener un equipo representado por sus jugadores
+    // Método para calcular el promedio de victorias de los jugadores
+    calcularPromedioVictorias() {
+        if (this.jugadores.length === 0) return 0;
+        const totalVictorias = this.jugadores.reduce((total, jugador) => total + jugador.victorias, 0);
+        return totalVictorias / this.jugadores.length;
+    }
+
+    // Método para mostrar el equipo
     mostrarEquipo() {
         return `${this.nombre} - Jugadores: ${this.jugadores.map(j => j.nombre).join(', ')}`;
     }
@@ -32,3 +39,4 @@ export class Equipo {
         this.puntos += puntos;
     }
 }
+

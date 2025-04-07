@@ -1,5 +1,6 @@
-import { Equipo } from './Equipo.js';
 // Torneo.js
+import { Equipo } from './Equipo.js';
+
 export class Torneo {
     constructor(nombre, fecha, ubicacion) {
         this.nombre = nombre;
@@ -8,7 +9,7 @@ export class Torneo {
         this.equipos = [];
     }
 
-    // Agregar equipo al torneo
+    // Agregar un equipo al torneo
     agregarEquipo(equipo) {
         if (equipo instanceof Equipo) {
             this.equipos.push(equipo);
@@ -27,15 +28,15 @@ export class Torneo {
         return this.equipos.find(equipo => equipo.nombre === nombre);
     }
 
-    // Obtener el mejor equipo según victorias
+    // Mostrar el mejor equipo según victorias
     mejorEquipo() {
         return this.equipos.reduce((mejor, equipo) => {
             return equipo.victorias > mejor.victorias ? equipo : mejor;
         }, this.equipos[0]);
     }
 
-    // Filtrar equipos por victorias
-    equiposPorVictorias() {
-        return this.equipos.filter(equipo => equipo.victorias > 0);
+    // Ordenar equipos por el promedio de victorias de sus jugadores
+    equiposOrdenadosPorPromedioVictorias() {
+        return this.equipos.sort((a, b) => b.calcularPromedioVictorias() - a.calcularPromedioVictorias());
     }
 }
